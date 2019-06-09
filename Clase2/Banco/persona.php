@@ -1,20 +1,21 @@
 <?php
 
-
-class Persona extends Cliente
+class Persona extends Cliente implements Imprimible
 {
   Private $nombre;
   Private $apellido;
   Private $documento;
   Private $nacimiento;
+//  Private $cuenta; la hereda de Cliente
 
-public function __construct($nombre,$apellido,$documento,$nacimiento,$email,$pass){
-  $this->nombre = $nombre;
-  $this->apellido = $apellido;
-  $this->documento = $documento;
-  $this->nacimiento = $nacimiento;
-  parent::__construct($email,$pass);
-}
+  public function __construct($nombre,$apellido,$documento,$nacimiento,$email,$pass,$cuenta){
+    $this->nombre = $nombre;
+    $this->apellido = $apellido;
+    $this->documento = $documento;
+    $this->nacimiento = $nacimiento;
+    parent::__construct($email,$pass);
+    $this->cuenta = $cuenta;
+  }
 
 
   public function setNombre($nombre){
@@ -40,6 +41,16 @@ public function __construct($nombre,$apellido,$documento,$nacimiento,$email,$pas
   }
   public function getNacimiento(){
     return $this->nacimiento;
+  }
+
+  public function pagar($monto,$cajero){
+    $this->getCuenta()->debitar($monto,$cajero);
+  }
+  public function depositar($monto){
+    $this->getCuenta()->acreditar($monto);
+  }
+  public function mostrar(){
+    echo $this->nombre . " " . $this->apellido;
   }
 }
 
